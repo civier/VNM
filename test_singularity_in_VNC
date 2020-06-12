@@ -1,0 +1,11 @@
+######################################################
+#
+# Open a shell within a modifiable Singularity image
+#
+#########################################################
+# USAGE:
+# test_singularity_in_VNC <singularity_image.sif>
+#############################################################
+# need to bind /home/ubuntu because when sudo, XAUTHORITY env variable still points to /home/ubuntu
+# can use --overlay <path to folder with changes>  instead of --writable-tmpfs for changes to persist
+sudo singularity shell -B$HOME:$HOME --writable-tmpfs $1
