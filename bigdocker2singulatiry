@@ -1,0 +1,24 @@
+###########################################################
+# Convert large Docker container to Singularity container
+###########################################################
+# 
+# USAGE:
+# bigdocker2singularity <output.sif> <docker container tag> <docker container version>
+#
+
+# NOTES:
+# - must make sure that root has enough room for docker image, as image will be constructed in /var/tmp
+# described here: https://github.com/sylabs/singularity/issues/1537
+# - For some reason, singulatiry does not read SINGULARITY_CACHEDIR, and generate cache at /root/.singularity (if no space there, can download docker image to a tar file, and run everything from a normal user)
+# - The first stage of "INFO:	starting build..." is very slow
+# - The last stage of "INFO:	Creating SIF file..." is very slow
+# - fix-perms is required so I have permission to write file when running with --writable-tmpfs
+
+mkdir tmp
+mkdir cache
+mkdir localcache
+sudo SINGULARITY_TMPDIR=`pwd`/tmp \
+    SINGULARITY_CACHEDIR=`pwd`/cache \
+    SINGULARITY_LOCALCACHEDIR=`pwd`/localcache \
+    singularity -v build -fix-perms \
+    $1 docker-daemon://$2:$3
