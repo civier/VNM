@@ -1,4 +1,12 @@
-# use most recent versions of packages available through neurodocker
+# 
+# Generate a VNM docker container using the most recent versions of packages available through neurodocker
+#
+################################################################
+#
+# USAGE:
+#
+# generate_vnm_docker <docker tag> <docker version>
+#
 sudo docker run --rm kaczmarj/neurodocker:0.6.0 generate docker \
   --base debian:stretch \
   --pkg-manager apt \
@@ -9,3 +17,4 @@ sudo docker run --rm kaczmarj/neurodocker:0.6.0 generate docker \
   --matlabmcr version=2018a \
   --mrtrix3 version=3.0_RC3 \
   > Dockerfile
+sudo docker build -t $1:$2 .
