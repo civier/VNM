@@ -20,5 +20,5 @@ mkdir localcache
 sudo SINGULARITY_TMPDIR=`pwd`/tmp \
     SINGULARITY_CACHEDIR=`pwd`/cache \
     SINGULARITY_LOCALCACHEDIR=`pwd`/localcache \
-    singularity -v build -fix-perms \
+    singularity -v build --fix-perms \
     $1 docker-daemon://$2:$3
